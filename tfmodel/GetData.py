@@ -23,10 +23,10 @@ class GetData():
                 try:
                     folder = os.path.relpath(label_root, label_dir)
                     image_root = os.path.join(image_dir, folder)
-
+                    lab_root= os.path.join(image_dir, folder)
 
                     image = scipy.misc.imread(os.path.join(image_root, file))
-                    label = scipy.misc.imread(os.path.join(label_root, file))
+                    label = scipy.misc.imread(os.path.join(lab_root, file))
 
                     image = image[...,0][...,None]/255
 

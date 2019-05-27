@@ -16,9 +16,12 @@ def selu(x, name='selu'):
 def c2rb(net, filters, kernel_size, activation=True, scope=None):
 
     with tf.variable_scope(scope):
+        print(f"before :{scope}")
+        print("the net shape is " )
+        print(net.shape.as_list())
 
         kernal_units = kernel_size[0] * kernel_size[1] * net.shape.as_list()[-1]
-
+        print(kernal_units)
         net = tf.layers.conv2d(net, filters, kernel_size,
                                padding='same',
                                activation=None,
@@ -28,50 +31,53 @@ def c2rb(net, filters, kernel_size, activation=True, scope=None):
                                name='conv')
 
         if activation:
+            print("it is activation")
             net = selu(net, name='selu')
-
+            
+        print("after the net shape is " )
+        print(net.shape.as_list())
+        print("\n")
         return net
 
 
 def inference(images, class_inc_bg = None):
 
     images = (2.0/255.0) * images - 1.0
-
+#number4 >> where is reuse???
     with tf.variable_scope('pool1'):
         net = c2rb(images, 64, [3, 3], scope='conv1_1')
         net = c2rb(net, 64, [3, 3],  scope='conv1_2')
         net, arg1 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool1')
-
+        print(f"the ind is {arg1}")
     with tf.variable_scope('pool2'):
         net = c2rb(net, 128, [3, 3], scope='conv2_1')
         net = c2rb(net, 128, [3, 3], scope='conv2_2')
         net, arg2 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool2')
-
+        print(f"the ind is {arg2}")
     with tf.variable_scope('pool3'):
         net = c2rb(net, 256, [3, 3], scope='conv3_1')
         net = c2rb(net, 256, [3, 3], scope='conv3_2')
         net = c2rb(net, 256, [3, 3], scope='conv3_3')
         net, arg3 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool3')
-
+        print(f"the ind is {arg3}")
     with tf.variable_scope('pool4'):
         net = c2rb(net, 512, [3, 3], scope='conv4_1')
         net = c2rb(net, 512, [3, 3], scope='conv4_2')
         net = c2rb(net, 512, [3, 3], scope='conv4_3')
         net, arg4 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool4')
-
+        print(f"the ind is {arg4}")
     with tf.variable_scope('pool5'):
         net = c2rb(net, 512, [3, 3], scope='conv5_1')
         net = c2rb(net, 512, [3, 3], scope='conv5_2')
         net = c2rb(net, 512, [3, 3], scope='conv5_3')
         net, arg5 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool5')
-
+        print(f"the ind is {arg5}")
     with tf.variable_scope('unpool5'):
         net = unpool_with_argmax(net, arg5, name='maxunpool5')
         net = c2rb(net, 512, [3, 3], scope='uconv5_3')
         net = c2rb(net, 512, [3, 3], scope='uconv5_2')
         net = c2rb(net, 512, [3, 3], scope='uconv5_1')
 
-    with tf.variable_scope('unpool4'):
         net = unpool_with_argmax(net, arg4, name='maxunpool4')
         net = c2rb(net, 512, [3, 3], scope='uconv4_3')
         net = c2rb(net, 512, [3, 3], scope='uconv4_2')

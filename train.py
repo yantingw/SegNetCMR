@@ -40,7 +40,7 @@ def main():
     g = tf.Graph()
 
     with g.as_default():
-#number3 
+
         images, labels = tfmodel.placeholder_inputs(batch_size=BATCH_SIZE) 
 
         logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2)

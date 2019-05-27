@@ -16,12 +16,8 @@ def selu(x, name='selu'):
 def c2rb(net, filters, kernel_size, activation=True, scope=None):
 
     with tf.variable_scope(scope):
-        print(f"before :{scope}")
-        print("the net shape is " )
-        print(net.shape.as_list())
 
         kernal_units = kernel_size[0] * kernel_size[1] * net.shape.as_list()[-1]
-        print(kernal_units)
         net = tf.layers.conv2d(net, filters, kernel_size,
                                padding='same',
                                activation=None,
@@ -102,6 +98,7 @@ def inference(images, class_inc_bg = None):
     with tf.variable_scope('output'):
         #class_inc_bg is "2"
         logits = c2rb(net, class_inc_bg, [3, 3], activation=False, scope='logits')
-        softmax_logits = tf.nn.softmax(logits=logits, dim=3, name='softmax_logits')
-        print(f"the end :{logits}")
+        softmax_logits = tf.nn.softmax(logits=logits, dim=3, name='softmax_logits') #at dimension3 doing softmax 
+#6, 256, 256, 2
+        print(f"the soend :{softmax_logits}")
     return logits, softmax_logits

@@ -103,5 +103,5 @@ def inference(images, class_inc_bg = None):
         #class_inc_bg is "2"
         logits = c2rb(net, class_inc_bg, [3, 3], activation=False, scope='logits')
         softmax_logits = tf.nn.softmax(logits=logits, dim=3, name='softmax_logits')
-
+        print(f"the end :{logits}")
     return logits, softmax_logits

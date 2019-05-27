@@ -43,35 +43,36 @@ def c2rb(net, filters, kernel_size, activation=True, scope=None):
 def inference(images, class_inc_bg = None):
 
     images = (2.0/255.0) * images - 1.0
-#number4 >> where is reuse???
+#[6, 256, 256,1]
     with tf.variable_scope('pool1'):
         net = c2rb(images, 64, [3, 3], scope='conv1_1')
+       # [6, 256, 256, 64]
         net = c2rb(net, 64, [3, 3],  scope='conv1_2')
         net, arg1 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool1')
-        print(f"the ind is {arg1}")
+#[6, 128, 128, 64]
     with tf.variable_scope('pool2'):
         net = c2rb(net, 128, [3, 3], scope='conv2_1')
         net = c2rb(net, 128, [3, 3], scope='conv2_2')
         net, arg2 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool2')
-        print(f"the ind is {arg2}")
+#[6, 128, 128, 128]
     with tf.variable_scope('pool3'):
         net = c2rb(net, 256, [3, 3], scope='conv3_1')
         net = c2rb(net, 256, [3, 3], scope='conv3_2')
         net = c2rb(net, 256, [3, 3], scope='conv3_3')
         net, arg3 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool3')
-        print(f"the ind is {arg3}")
+#[6,64,64, 256]
     with tf.variable_scope('pool4'):
         net = c2rb(net, 512, [3, 3], scope='conv4_1')
         net = c2rb(net, 512, [3, 3], scope='conv4_2')
         net = c2rb(net, 512, [3, 3], scope='conv4_3')
         net, arg4 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool4')
-        print(f"the ind is {arg4}")
+#[6, 16, 16, 512]
     with tf.variable_scope('pool5'):
         net = c2rb(net, 512, [3, 3], scope='conv5_1')
         net = c2rb(net, 512, [3, 3], scope='conv5_2')
         net = c2rb(net, 512, [3, 3], scope='conv5_3')
         net, arg5 = tf.nn.max_pool_with_argmax(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='maxpool5')
-        print(f"the ind is {arg5}")
+
     with tf.variable_scope('unpool5'):
         net = unpool_with_argmax(net, arg5, name='maxunpool5')
         net = c2rb(net, 512, [3, 3], scope='uconv5_3')
@@ -82,23 +83,24 @@ def inference(images, class_inc_bg = None):
         net = c2rb(net, 512, [3, 3], scope='uconv4_3')
         net = c2rb(net, 512, [3, 3], scope='uconv4_2')
         net = c2rb(net, 256, [3, 3], scope='uconv4_1')
-
+#[6, 32, 32, 256]
     with tf.variable_scope('unpool3'):
         net = unpool_with_argmax(net, arg3, name='maxunpool3')
         net = c2rb(net, 256, [3, 3], scope='uconv3_3')
         net = c2rb(net, 256, [3, 3], scope='uconv3_2')
         net = c2rb(net, 128, [3, 3], scope='uconv3_1')
-
+#6, 64, 64, 256
     with tf.variable_scope('unpool2'):
         net = unpool_with_argmax(net, arg2, name='maxunpool2')
         net = c2rb(net, 128, [3, 3], scope='uconv2_2')
         net = c2rb(net, 64, [3, 3], scope='uconv2_1')
-
+#6, 128, 128, 64
     with tf.variable_scope('unpool1'):
         net = unpool_with_argmax(net, arg1, name='maxunpool1')
         net = c2rb(net, 64, [3, 3], scope='uconv1_2')
-
+#6, 256, 256, 64
     with tf.variable_scope('output'):
+        #class_inc_bg is "2"
         logits = c2rb(net, class_inc_bg, [3, 3], activation=False, scope='logits')
         softmax_logits = tf.nn.softmax(logits=logits, dim=3, name='softmax_logits')
 

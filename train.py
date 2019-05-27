@@ -44,7 +44,8 @@ def main():
         images, labels = tfmodel.placeholder_inputs(batch_size=BATCH_SIZE) 
 
         logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2)
-
+        print(logits)
+        print(softmax_logits)
         tfmodel.add_output_images(images=images, logits=logits, labels=labels)
 
         loss = tfmodel.loss_calc(logits=logits, labels=labels)

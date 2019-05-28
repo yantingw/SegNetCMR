@@ -2,20 +2,18 @@ import tensorflow as tf
 
 def loss_calc(logits, labels):
 
-    
+    class_inc_bg = 2
 
-    labels = labels[...,0]
+    labels = labels[...,0]#6,256,256
 
     class_weights = tf.constant([[10.0/90, 10.0]])
 
-    onehot_labels = tf.one_hot(labels, class_inc_bg)
-    print(onehot_labels)
-    weights = tf.reduce_sum(class_weights * onehot_labels, axis=-1)
-
+    onehot_labels = tf.one_hot(labels, class_inc_bg)#6,256,256,2(0 or 1)
+    #get the cross entropy
+    weights = tf.reduce_sum(class_weights * onehot_labels, axis=-1) #6,256,256
     unweighted_losses = tf.nn.softmax_cross_entropy_with_logits(labels=onehot_labels, logits=logits)
-
+    #get thr loss
     weighted_losses = unweighted_losses * weights
-
     loss = tf.reduce_mean(weighted_losses)
 
     tf.summary.scalar('loss', loss)

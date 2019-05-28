@@ -43,7 +43,7 @@ def main():
 
         images, labels = tfmodel.placeholder_inputs(batch_size=BATCH_SIZE)
         #set the model 
-        logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2)
+        logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2) #6,256,256,2
         #in helper.py; for showing in tensor broad (only show the first time in the batch)
         tfmodel.add_output_images(images=images, logits=logits, labels=labels)
         #in evaluation; for

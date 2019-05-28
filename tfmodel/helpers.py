@@ -6,7 +6,7 @@ def add_output_images(images, logits, labels, max_outputs=3):
 
     output_image_bw = images[..., 0]
 
-    labels1 = tf.cast(labels[...,0], tf.float32)
+    labels1 = tf.cast(labels[...,0], tf.float32) #change the data type to float32
 
     input_labels_image_r = labels1 + (output_image_bw * (1-labels1))
     input_labels_image = tf.stack([input_labels_image_r, output_image_bw, output_image_bw], axis=3)

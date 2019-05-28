@@ -42,9 +42,9 @@ def main():
     with g.as_default():
 
         images, labels = tfmodel.placeholder_inputs(batch_size=BATCH_SIZE)
-#set the model 
+        #set the model 
         logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2)
-#
+        #in helper.py
         tfmodel.add_output_images(images=images, logits=logits, labels=labels)
 
         loss = tfmodel.loss_calc(logits=logits, labels=labels)

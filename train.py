@@ -37,16 +37,16 @@ def main():
     train_data = tfmodel.GetData(TRAIN_DATA_DIR)
     test_data  = tfmodel.GetData(TEST_DATA_DIR)
 
-     g = tf.Graph()
+    g = tf.Graph()
 
     with g.as_default():
 
         images, labels = tfmodel.placeholder_inputs(batch_size=BATCH_SIZE)
         #set the model 
         logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2)
-        #in helper.py for showing in tensor broad (only show the first time in the batch)
+        #in helper.py; for showing in tensor broad (only show the first time in the batch)
         tfmodel.add_output_images(images=images, logits=logits, labels=labels)
-        #
+        #in evaluation; for
         loss = tfmodel.loss_calc(logits=logits, labels=labels)
 
         global_step = tf.Variable(0, name='global_step', trainable=False)

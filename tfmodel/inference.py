@@ -27,12 +27,9 @@ def c2rb(net, filters, kernel_size, activation=True, scope=None):
                                name='conv')
 
         if activation:
-            print("it is activation")
+
             net = selu(net, name='selu')
-            
-        print("after the net shape is " )
-        print(net.shape.as_list())
-        print("\n")
+
         return net
 
 

@@ -15,9 +15,9 @@ def add_output_images(images, logits, labels, max_outputs=3):
     classification1 = tf.nn.softmax(logits = logits, dim=-1)[...,1]
 
     output_labels_image_r = classification1 + (output_image_bw * (1-classification1))
-    output_labels_image = tf.stack([output_labels_image_r, output_image_bw, output_image_bw], axis=3)
+    output_labels_image = tf.stack([output_labels_image_r, output_image_bw, output_image_bw], axis=3) #6,256,256,3
     print(f"it is output_labels_image :  {output_labels_image}")
     tf.summary.image('output_labels_mixed', output_labels_image, max_outputs=3)
 
-    return
+    return output_labels_image
 

@@ -36,7 +36,7 @@ class GetData():
 
                     images_list.append(image)
                     labels_list.append(label)
-                    self.examples = examples+1                    
+                    self.examples = self.examples+1                    
                 except Exception as e:
                     print(e)
         print("finished loading images")

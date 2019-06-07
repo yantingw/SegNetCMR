@@ -1,4 +1,4 @@
-#!/data/anaconda510/bin/python
+#!data/anaconda510/bin/python
 import os
 
 import tensorflow as tf
@@ -20,7 +20,7 @@ TEST_DATA_DIR = os.path.join(WORKING_DIR, DATA_NAME, TEST_SOURCE)
 ROOT_LOG_DIR = os.path.join(WORKING_DIR, OUTPUT_NAME)
 LOG_DIR = os.path.join(ROOT_LOG_DIR, RUN_NAME)
 CHECKPOINT_FL = os.path.join(LOG_DIR, CHECKPOINT_FN)
-
+print(CHECKPOINT_FL)
 TRAIN_WRITER_DIR = os.path.join(LOG_DIR, TRAIN_SOURCE)
 TEST_WRITER_DIR = os.path.join(LOG_DIR, TEST_SOURCE)
 

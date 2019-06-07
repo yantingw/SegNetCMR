@@ -16,8 +16,12 @@ def selu(x, name='selu'):
 def c2rb(net, filters, kernel_size, activation=True, scope=None):
 
     with tf.variable_scope(scope):
+        print(f"before :{scope}")
+        print("the net shape is " )
+        print(net.shape.as_list())
 
         kernal_units = kernel_size[0] * kernel_size[1] * net.shape.as_list()[-1]
+        print(kernal_units)
         net = tf.layers.conv2d(net, filters, kernel_size,
                                padding='same',
                                activation=None,
@@ -27,9 +31,12 @@ def c2rb(net, filters, kernel_size, activation=True, scope=None):
                                name='conv')
 
         if activation:
-
+            print("it is activation")
             net = selu(net, name='selu')
-
+            
+        print("after the net shape is " )
+        print(net.shape.as_list())
+        print("\n")
         return net
 
 
@@ -93,9 +100,19 @@ def inference(images, class_inc_bg = None):
         net = c2rb(net, 64, [3, 3], scope='uconv1_2')
 #6, 256, 256, 64
     with tf.variable_scope('output'):
-        #class_inc_bg is "2"
+        #class_inc_bg is "2" (0 & 1)
         logits = c2rb(net, class_inc_bg, [3, 3], activation=False, scope='logits')
         softmax_logits = tf.nn.softmax(logits=logits, dim=3, name='softmax_logits') #at dimension3 doing softmax 
+        predict_img =np.zeros((softmax_logits.shape.as_list()[0],softmax_logits.shape.as_list()[1],softmax_logits.shape.as_list()[2])) #
+        """
+        for idx in range(softmax_logits.shape.as_list()[0]):
+            for col in range(softmax_logits.shape.as_list()[1]):
+                for row in range(softmax_logits.shape.as_list()[2]):
+                   if softmax_logits[idx,col,row,0]>softmax_logits[idx,col,row,1] :
+                       predict_img [idx,col,row] = 0
+                   else:
+                        predict_img [idx,col,row] = 1
+        """
 #6, 256, 256, 2
-        print(f"the soend :{softmax_logits}")
+        print(f"the soend :{predict_img}")
     return logits, softmax_logits

@@ -1,4 +1,4 @@
-
+#!/data/anaconda510/bin/python
 import os
 
 import tensorflow as tf
@@ -47,7 +47,7 @@ def main():
         logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2)
 
         img = tfmodel.add_output_images(images=images, logits=logits, labels=labels) #in helper.py; for showing in tensor broad (only show the first time in the batch)
-        print(type(img))
+        print(f"what is the img outtt type{type(img)}")
 
         loss = tfmodel.loss_calc(logits=logits, labels=labels)        #in evaluation; for
 

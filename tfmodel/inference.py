@@ -16,12 +16,12 @@ def selu(x, name='selu'):
 def c2rb(net, filters, kernel_size, activation=True, scope=None):
 
     with tf.variable_scope(scope):
-        print(f"before :{scope}")
-        print("the net shape is " )
-        print(net.shape.as_list())
+       # print(f"before :{scope}")
+        #print("the net shape is " )
+        #print(net.shape.as_list())
 
         kernal_units = kernel_size[0] * kernel_size[1] * net.shape.as_list()[-1]
-        print(kernal_units)
+        #print(kernal_units)
         net = tf.layers.conv2d(net, filters, kernel_size,
                                padding='same',
                                activation=None,
@@ -31,12 +31,12 @@ def c2rb(net, filters, kernel_size, activation=True, scope=None):
                                name='conv')
 
         if activation:
-            print("it is activation")
+        #    print("it is activation")
             net = selu(net, name='selu')
             
-        print("after the net shape is " )
-        print(net.shape.as_list())
-        print("\n")
+       # print("after the net shape is " )
+       # print(net.shape.as_list())
+       # print("\n")
         return net
 
 
@@ -114,5 +114,5 @@ def inference(images, class_inc_bg = None):
                         predict_img [idx,col,row] = 1
         """
 #6, 256, 256, 2
-        print(f"the soend :{predict_img}")
+        #print(f"the soend :{predict_img}")
     return logits, softmax_logits

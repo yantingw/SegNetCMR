@@ -26,7 +26,7 @@ ROOT_LOG_DIR = os.path.join(WORKING_DIR, OUTPUT_NAME)
 LOG_DIR = os.path.join(ROOT_LOG_DIR, RUN_NAME)
 image_dir = os.path.join(LOG_DIR, output_img_data)
 print(image_dir)
-#CHECKPOINT_FL = os.path.join(LOG_DIR, CHECKPOINT_FN)
+CHECKPOINT_FL = os.path.join(LOG_DIR, CHECKPOINT_FN)
 
 tf.reset_default_graph()
 
@@ -35,12 +35,12 @@ v2 = tf.Variable(tf.constant(0.2, shape = [2]), name="v2")
 
 test_data = tfmodel.GetData(TEST_DATA_DIR)
 label_data = tfmodel.GetData(TEST_DATA_DIR)
-
-saver = tf.train.Saver()
+model_path = os.path.join(LOG_DIR,'model.ckpt-2500.meta')
+new_saver = tf.train.import_meta_graph()
 
 with tf.Session() as sess:
-    model_file=tf.train.latest_checkpoint('ckpt/')
-    saver.restore(sess,model_file)
+    model_file= tf.train.latest_checkpoint('./')
+    new_saver.restore(sess,model_file)
     print("Model restored.")
     num = 0
     while True:

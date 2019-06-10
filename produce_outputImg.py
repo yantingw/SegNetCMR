@@ -7,7 +7,7 @@ import os
 import tensorflow as tf
 
 import tfmodel
-
+import scipy.misc
 # Dice Coefficient to work outside Tensorflow
 
 
@@ -96,7 +96,12 @@ with tf.Session() as sess:
                         predict_img [idx,col,row] = 1
             num+=1
             dic_record.append(dice_coef_2(labels_batch[idx,...],predict_img[idx,...]))
-            np.save(f"img{num}",predict_img[idx,...])
+            #np.save(f"img{num}",predict_img[idx,...])
+            scipy.misc.imsave(f"img{num}.jpg",predict_img[idx,...])
+
             print(f"get pic {num}")
+            if num == 279:
+                break
     dic_record = np.array(dic_record)
-    np.save(dic_record,'dic_table')                  
+    np.save(dic_record,'dic_table') 
+    np.savetxt('diffrent_dic.csv', dic_record, delimiter = ',')                 

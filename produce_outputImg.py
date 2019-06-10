@@ -26,7 +26,7 @@ ROOT_LOG_DIR = os.path.join(WORKING_DIR, OUTPUT_NAME)
 LOG_DIR = os.path.join(ROOT_LOG_DIR, RUN_NAME)
 image_dir = os.path.join(LOG_DIR, output_img_data)
 print(image_dir)
-CHECKPOINT_FL = os.path.join(LOG_DIR, CHECKPOINT_FN)
+#CHECKPOINT_FL = os.path.join(LOG_DIR, CHECKPOINT_FN)
 
 tf.reset_default_graph()
 

@@ -60,7 +60,8 @@ with tf.Session() as sess:
     saver.restore(sess, module_file)
     """
     new_saver = tf.train.import_meta_graph(model_path)
-    new_saver.restore(sess,os.path.join(LOG_DIR, 'model.ckpt-2500'))
+    #new_saver.restore(sess,os.path.join(LOG_DIR, 'model.ckpt-2500'))
+    new_saver.restore(sess,tf.train.latest_checkpoint(LOG_DIR))
     print("Model restored.")
     num = 0
     dic_record = list
@@ -69,7 +70,7 @@ with tf.Session() as sess:
     logits= graph.get_tensor_by_name("logits:0")   
     images =graph.get_tensor_by_name("images:0")
     labels =graph.get_tensor_by_name("labels:0")
-    
+
 
     while True:
         images_batch, labels_batch = test_data.no_shuffle_next_batch(1)

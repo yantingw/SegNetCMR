@@ -44,15 +44,24 @@ with tf.Session() as sess:
     saver.restore(sess,model_file)
     print("Model restored.")
     num = 0
-    while　True :
+    while True:
         images_batch, labels_batch = test_data.next_batch(1)
         feed_dict = {images: images_batch, labels: labels_batch}
         result_soft,result_logits = sess.run( [softmax_logits,lologits] , feed_dict=feed_dict)
         result_soft = np.array(result_soft)
         result_logits = np.array(result_logits)
-        np.save(result_logit,"img")
+        predict_img = result_logits
+        for idx in range(result_soft.shape[0]):
+            for col in range(result_soft.shape[1]):
+                for row in range(result_soft.shape[2]):
+                   if result_soft[idx,col,row,0]>result_soft[idx,col,row,1] :
+                       predict_img [idx,col,row] = 0
+                   else:
+                        predict_img [idx,col,row] = 1
+
         num+=1
+        np.save(predict_img,f"img{num}")
         print(f"get pic {num}")
         if(num==279):
-            break;
+            break
                       

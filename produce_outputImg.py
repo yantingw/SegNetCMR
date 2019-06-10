@@ -70,8 +70,8 @@ with tf.Session() as sess:
 
   
  #   logits= graph.get_tensor_by_name("logits:0")   
-    images = tf.placeholder(tf.float32, [batch_size, 256, 256, 1])
-    labels = tf.placeholder(tf.int64, [batch_size, 256, 256, 1])
+    images = tf.placeholder(tf.float32, [1, 256, 256, 1])
+    labels = tf.placeholder(tf.int64, [1, 256, 256, 1])
     softmax_logits = graph.get_tensor_by_name(f"{nodes[757]}:0")
 
 

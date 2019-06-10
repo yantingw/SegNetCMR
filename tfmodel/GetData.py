@@ -60,11 +60,11 @@ class GetData():
     
     def no_shuffle_next_batch(self, batch_size):
 
-    if len(self.source_list) < batch_size:
-        new_source = list(range(self.examples))
-        self.source_list.extend(new_source)
+        if len(self.source_list) < batch_size:
+            new_source = list(range(self.examples))
+            self.source_list.extend(new_source)
 
-    examples_idx = self.source_list[:batch_size]
-    del self.source_list[:batch_size]
+        examples_idx = self.source_list[:batch_size]
+        del self.source_list[:batch_size]
 
-    return self.images[examples_idx,...], self.labels[examples_idx,...]
+        return self.images[examples_idx,...], self.labels[examples_idx,...]

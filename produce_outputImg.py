@@ -107,6 +107,6 @@ with tf.Session() as sess:
                 break
         
     dic_record = np.array(dic_record)
-    np.save(dic_record,'dic_table') 
+    np.save('dic_table',dic_record) 
     np.savetxt('diffrent_dic.csv', dic_record, delimiter = ',')
                     

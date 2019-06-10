@@ -39,7 +39,7 @@ model_path = os.path.join(LOG_DIR,'model.ckpt-2500.meta')
 
 with tf.Session() as sess:
     new_saver = tf.train.import_meta_graph(model_path)
-    model_file= tf.train.latest_checkpoint('ckpt')
+    model_file= tf.train.latest_checkpoint('model.ckpt')
     new_saver.restore(sess,model_file)
     print("Model restored.")
     num = 0

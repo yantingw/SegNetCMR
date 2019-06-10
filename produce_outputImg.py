@@ -68,9 +68,9 @@ with tf.Session() as sess:
     graph = tf.get_default_graph()
     #softmax_logits = graph.get_tensor_by_name("softmax_logits:0")
     #logits= graph.get_tensor_by_name("logits:0")   
-    images =graph.get_tensor_by_name("images")
-    labels =graph.get_tensor_by_name("labels")
-    
+    images =graph.get_tensor_by_name("images:[256,256,1]")
+    labels =graph.get_tensor_by_name("labels:[256,256,1]")
+
 
 
     while True:

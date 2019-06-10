@@ -6,7 +6,7 @@ import os
 
 import tensorflow as tf
 
-import tfmodel.GetData
+import tfmodel
 
 # Dice Coefficient to work outside Tensorflow
 
@@ -64,6 +64,10 @@ with tf.Session() as sess:
     print("Model restored.")
     num = 0
     dic_record = list
+    images, labels = tfmodel.placeholder_inputs(batch_size=1)
+
+    logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2)
+
     while True:
         images_batch, labels_batch = test_data.no_shuffle_next_batch(1)
         feed_dict = {images: images_batch, labels: labels_batch}
@@ -89,4 +93,4 @@ with tf.Session() as sess:
         print(f"get pic {num}")
         if(num==279):
             break
-                      
+    np.save(dic_record,'dic_table')                  

@@ -102,7 +102,8 @@ with tf.Session() as sess:
             scipy.misc.imsave(f"img{num}.jpg",predict_img[idx,...])
 
             print(f"get pic {num}")
-            if num == 279:
+            if num >= 279   :
+                print("end")
                 break
     dic_record = np.array(dic_record)
     np.save(dic_record,'dic_table') 

@@ -67,7 +67,7 @@ class GetData():
             examples_idx = self.source_list[:batch_size]
             del self.source_list[:batch_size]
         except :
-            new_source = list(range((batch_size-len(self.source_list)))
+            new_source = list(range((batch_size-len(self.source_list))))
             self.source_list.extend(new_source)
             examples_idx = self.source_list[:batch_size]
 

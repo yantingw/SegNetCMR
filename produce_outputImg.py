@@ -69,19 +69,19 @@ with tf.Session() as sess:
     print([tensor.name for tensor in tf.get_default_graph().as_graph_def().node])
 
     softmax_logits = graph.get_tensor_by_name("output:0")
-    """   
-    softmax_logits = graph.get_tensor_by_name("softmax_logits:0")
-    logits= graph.get_tensor_by_name("logits:0")   
-    images =graph.get_tensor_by_name("images:0")
-    labels =graph.get_tensor_by_name("labels:0")
-    """
+  
+    softmax_logits = graph.get_tensor_by_name("ouput/softmax_logits:0")
+ #   logits= graph.get_tensor_by_name("logits:0")   
+    images =graph.get_tensor_by_name("Placeholder:0")
+    labels =graph.get_tensor_by_name("Placeholder_1:0")
+
 
 
     
     while True:
         images_batch, labels_batch = test_data.no_shuffle_next_batch(1)
         feed_dict = {images: images_batch, labels: labels_batch}
-        result_soft,result_logits = sess.run( [softmax_logits, logits] , feed_dict=feed_dict)
+        result_soft,result_logits = sess.run( [softmax_logits] , feed_dict=feed_dict)
         
         
         result_soft = np.array(result_soft)

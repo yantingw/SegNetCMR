@@ -36,9 +36,9 @@ v2 = tf.Variable(tf.constant(0.2, shape = [2]), name="v2")
 test_data = tfmodel.GetData(TEST_DATA_DIR)
 label_data = tfmodel.GetData(TEST_DATA_DIR)
 model_path = os.path.join(LOG_DIR,'model.ckpt-2500.meta')
-new_saver = tf.train.import_meta_graph(model_path)
 
 with tf.Session() as sess:
+    new_saver = tf.train.import_meta_graph(model_path)
     model_file= tf.train.latest_checkpoint('./')
     new_saver.restore(sess,model_file)
     print("Model restored.")

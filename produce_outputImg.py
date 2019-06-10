@@ -67,8 +67,11 @@ with tf.Session() as sess:
     dic_record = list
     graph = tf.get_default_graph()
     nodes =np.array( [tensor.name for tensor in graph.as_graph_def().node])
-    idx = np.where(nodes=="ouput/softmax_logits")
-    print(f"the pos is {idx}")
+    idx = 0
+    for i in range(nodes.size):
+         print(f"the pos : {idx}  ---is {node[idx]}")
+         i+=1
+
   
  #   logits= graph.get_tensor_by_name("logits:0")   
     images =graph.get_tensor_by_name("Placeholder:0")

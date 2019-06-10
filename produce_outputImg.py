@@ -96,7 +96,7 @@ with tf.Session() as sess:
                         predict_img [idx,col,row] = 1
             num+=1
             dic_record.append(dice_coef_2(labels_batch[idx,...],predict_img[idx,...]))
-            np.save(predict_img[idx,...],f"img{num}")
+            np.save(f"img{num}",predict_img[idx,...])
             print(f"get pic {num}")
     dic_record = np.array(dic_record)
     np.save(dic_record,'dic_table')                  

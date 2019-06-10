@@ -64,6 +64,7 @@ with tf.Session() as sess:
     print("Model restored.")
     num = 0
     dic_record = list
+    graph = tf.get_default_graph()
     softmax_logits = graph.get_tensor_by_name("softmax_logits")
     logits= graph.get_tensor_by_name("logits")   
     images =graph.get_tensor_by_name("images")

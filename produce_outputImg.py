@@ -1,6 +1,5 @@
 #!data/anaconda510/bin/python
 import numpy as np
-import cv2
 import tensorflow as tf
 import os
 import os

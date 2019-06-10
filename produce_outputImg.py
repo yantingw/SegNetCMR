@@ -76,7 +76,7 @@ with tf.Session() as sess:
  #   logits= graph.get_tensor_by_name("logits:0")   
     images =graph.get_tensor_by_name("Placeholder:0")
     labels =graph.get_tensor_by_name("Placeholder_1:0")
-    softmax_logits = graph.get_tensor_by_name(nodes[idx[0]])
+    softmax_logits = graph.get_tensor_by_name(nodes[i[0]])
 
 
 

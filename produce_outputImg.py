@@ -1,4 +1,4 @@
-#!data/anaconda510/bin/python
+#!/data/anaconda510/bin/python
 import numpy as np
 import tensorflow as tf
 import os
@@ -30,9 +30,6 @@ print(image_dir)
 
 tf.reset_default_graph()
 
-v1 = tf.Variable(tf.constant(0.1, shape = [2]), name="v1")
-v2 = tf.Variable(tf.constant(0.2, shape = [2]), name="v2")
-
 test_data = tfmodel.GetData(TEST_DATA_DIR)
 label_data = tfmodel.GetData(TEST_DATA_DIR)
 model_path = os.path.join(LOG_DIR,'model.ckpt-2500.meta')
@@ -44,7 +41,7 @@ with tf.Session() as sess:
     saver.restore(sess, module_file)
     """
     new_saver = tf.train.import_meta_graph(model_path)
-    new_saver.restore(sess, tf.train.latest_checkpoint('./'))
+    new_saver.restore(sess,os.path.join(LOG_DIR, 'model.ckpt-2500'))
     print("Model restored.")
     num = 0
     while True:

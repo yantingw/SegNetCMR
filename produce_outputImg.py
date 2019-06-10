@@ -70,23 +70,21 @@ with tf.Session() as sess:
 
   
  #   logits= graph.get_tensor_by_name("logits:0")   
-    images = tf.placeholder(tf.float32, [1, 256, 256, 1])
-    labels = tf.placeholder(tf.int64, [1, 256, 256, 1])
-    softmax_logits = graph.get_tensor_by_name(f"{nodes[757]}:0")
+    images =graph.get_tensor_by_name("Placeholder:0")
+    labels =graph.get_tensor_by_name("Placeholder_1:0")
+    softmax_logits = graph.get_tensor_by_name(f"{nodes[757]}:0)
 
 
 
     
     while True:
-        images_batch, labels_batch = test_data.no_shuffle_next_batch(1)
+        images_batch, labels_batch = test_data.no_shuffle_next_batch(6)
         feed_dict = {images: images_batch, labels: labels_batch}
-        result_soft,result_logits = sess.run( [softmax_logits] , feed_dict=feed_dict)
+        result_soft = sess.run( [softmax_logits] , feed_dict=feed_dict)
         
         
         result_soft = np.array(result_soft)
-        result_logits = np.array(result_logits)
-        predict_img = result_logits
-        dic_record.append(dice_coef_2(labels_batch,predict_img))
+        predict_img =np.full((6,256,256), 0)
 
 
         for idx in range(result_soft.shape[0]):
@@ -96,10 +94,9 @@ with tf.Session() as sess:
                        predict_img [idx,col,row] = 0
                    else:
                         predict_img [idx,col,row] = 1
+            num+=1
+            dic_record.append(dice_coef_2(labels_batch[idx,...],predict_img[idx,...]))
+            np.save(predict_img[idx,...],f"img{num}")
+            print(f"get pic {num}")
 
-        num+=1
-        np.save(predict_img,f"img{num}")
-        print(f"get pic {num}")
-        if(num==279):
-            break
     np.save(dic_record,'dic_table')                  

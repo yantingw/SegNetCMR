@@ -109,4 +109,13 @@ with tf.Session() as sess:
     dic_record = np.array(dic_record)
     np.save('dic_table',dic_record) 
     np.savetxt('diffrent_dic.csv', dic_record, delimiter = ',')
+    
+    import matplotlib.pyplot as plt
+    avg_dic = np.mean(dic_record)
+    print (f'avg dic : {avg_dic}')
+    std_dic = np.std(dic_record)
+    print (f'dic std: {std_dic}')
+    fig = plt.figure()
+    plt.boxplot(dic_record, labels=('after change the code'))
+ 
                     

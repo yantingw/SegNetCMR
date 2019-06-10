@@ -116,6 +116,5 @@ with tf.Session() as sess:
     std_dic = np.std(dic_record)
     print (f'dic std: {std_dic}')
     fig = plt.figure()
-    plt.boxplot(dic_record, labels=('after change the code'))
- 
+    plt.boxplot(dic_record, sym ="o", whis =3,patch_artist=True,meanline=False,showmeans=True)    
                     

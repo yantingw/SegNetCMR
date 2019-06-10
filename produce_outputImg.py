@@ -68,7 +68,6 @@ with tf.Session() as sess:
     graph = tf.get_default_graph()
     print([tensor.name for tensor in tf.get_default_graph().as_graph_def().node])
 
-    softmax_logits = graph.get_tensor_by_name("output:0")
   
     softmax_logits = graph.get_tensor_by_name("ouput/softmax_logits:0")
  #   logits= graph.get_tensor_by_name("logits:0")   

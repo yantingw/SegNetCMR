@@ -64,7 +64,7 @@ with tf.Session() as sess:
     #new_saver.restore(sess,tf.train.latest_checkpoint(LOG_DIR))
     print("Model restored.")
     num = 0
-    dic_record = list
+    dic_record = list()
     graph = tf.get_default_graph()
     nodes =np.array( [tensor.name for tensor in graph.as_graph_def().node])
 
@@ -98,5 +98,5 @@ with tf.Session() as sess:
             dic_record.append(dice_coef_2(labels_batch[idx,...],predict_img[idx,...]))
             np.save(predict_img[idx,...],f"img{num}")
             print(f"get pic {num}")
-
+    dic_record = np.array(dic_record)
     np.save(dic_record,'dic_table')                  

@@ -66,10 +66,11 @@ with tf.Session() as sess:
     num = 0
     dic_record = list
     graph = tf.get_default_graph()
-    softmax_logits = graph.get_tensor_by_name("softmax_logits:0")
-    logits= graph.get_tensor_by_name("logits:0")   
-    images =graph.get_tensor_by_name("images:0")
-    labels =graph.get_tensor_by_name("labels:0")
+    #softmax_logits = graph.get_tensor_by_name("softmax_logits:0")
+    #logits= graph.get_tensor_by_name("logits:0")   
+    images =graph.get_tensor_by_name("images")
+    labels =graph.get_tensor_by_name("labels")
+    
 
 
     while True:

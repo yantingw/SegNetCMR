@@ -67,16 +67,12 @@ with tf.Session() as sess:
     dic_record = list
     graph = tf.get_default_graph()
     nodes =np.array( [tensor.name for tensor in graph.as_graph_def().node])
-    i = 0
-    for i in range(nodes.size):
-         print(f"the pos : {i}  ---is {nodes[i]}")
-         i+=1
 
   
  #   logits= graph.get_tensor_by_name("logits:0")   
     images =graph.get_tensor_by_name("Placeholder:0")
     labels =graph.get_tensor_by_name("Placeholder_1:0")
-    softmax_logits = graph.get_tensor_by_name(nodes[757])
+    softmax_logits = graph.get_tensor_by_name(f"{nodes[757]}:0")
 
 
 

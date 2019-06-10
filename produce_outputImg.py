@@ -117,4 +117,4 @@ with tf.Session() as sess:
     print (f'dic std: {std_dic}')
     fig = plt.figure()
     plt.boxplot(dic_record, sym ="o", whis =3,patch_artist=True,meanline=False,showmeans=True)    
-                    
+    plt.show()       

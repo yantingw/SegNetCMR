@@ -8,6 +8,21 @@ import tensorflow as tf
 
 import tfmodel.GetData
 
+# Dice Coefficient to work outside Tensorflow
+
+def dice_coef_2(y_true, y_pred):
+
+    side = len(y_true[0])
+
+    y_true_f = y_true.reshape(side*side)
+
+    y_pred_f = y_pred.reshape(side*side)
+
+    intersection = sum(y_true_f * y_pred_f)
+
+    return (2. * intersection + smooth) / (sum(y_true_f) + sum(y_pred_f) + smooth)
+
+
 DATA_NAME = 'Data'
 TRAIN_SOURCE = "Train"
 TEST_SOURCE = 'Test'
@@ -19,7 +34,6 @@ output_img_data = 'Img'
 
 WORKING_DIR = os.getcwd()
 
-TRAIN_DATA_DIR = os.path.join(WORKING_DIR, DATA_NAME, TRAIN_SOURCE)
 TEST_DATA_DIR = os.path.join(WORKING_DIR, DATA_NAME, TEST_SOURCE)
 
 ROOT_LOG_DIR = os.path.join(WORKING_DIR, OUTPUT_NAME)
@@ -31,7 +45,7 @@ print(image_dir)
 tf.reset_default_graph()
 
 test_data = tfmodel.GetData(TEST_DATA_DIR)
-label_data = tfmodel.GetData(TEST_DATA_DIR)
+#label_data = tfmodel.GetData(TEST_DATA_DIR)
 model_path = os.path.join(LOG_DIR,'model.ckpt-2500.meta')
 
 with tf.Session() as sess:
@@ -44,13 +58,19 @@ with tf.Session() as sess:
     new_saver.restore(sess,os.path.join(LOG_DIR, 'model.ckpt-2500'))
     print("Model restored.")
     num = 0
+    dic_record = list
     while True:
-        images_batch, labels_batch = test_data.next_batch(1)
+        images_batch, labels_batch = test_data.no_shuffle_next_batch(1)
         feed_dict = {images: images_batch, labels: labels_batch}
         result_soft,result_logits = sess.run( [softmax_logits,lologits] , feed_dict=feed_dict)
+        
+        
         result_soft = np.array(result_soft)
         result_logits = np.array(result_logits)
         predict_img = result_logits
+        dic_record.append(dice_coef_2(labels_batch,predict_img))
+
+
         for idx in range(result_soft.shape[0]):
             for col in range(result_soft.shape[1]):
                 for row in range(result_soft.shape[2]):

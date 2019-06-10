@@ -63,12 +63,13 @@ class GetData():
         if len(self.source_list) == 0 :
             new_source = list(range(self.examples))
             self.source_list.extend(new_source)
-        try:
+        if len(self.source_list) >= batch_size: 
             examples_idx = self.source_list[:batch_size]
             del self.source_list[:batch_size]
-        except :
+        else :
             new_source = list(range((batch_size-len(self.source_list))))
             self.source_list.extend(new_source)
-            examples_idx = self.source_list[:batch_size]
+            examples_idx = self.source_list
+            print ("last data")
 
         return self.images[examples_idx,...], self.labels[examples_idx,...]

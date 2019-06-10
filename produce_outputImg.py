@@ -95,7 +95,9 @@ with tf.Session() as sess:
                    else:
                         predict_img [idx,col,row] = 1
             num+=1
-            dic_record.append(dice_coef_2(labels_batch[idx,...],predict_img[idx,...]))
+            dic = dice_coef_2(labels_batch[idx,...],predict_img[idx,...])
+            dic_record.append(dic)
+            print(f"the dic coff is {dic}")
             #np.save(f"img{num}",predict_img[idx,...])
             scipy.misc.imsave(f"img{num}.jpg",predict_img[idx,...])
 

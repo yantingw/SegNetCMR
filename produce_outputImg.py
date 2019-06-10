@@ -76,8 +76,8 @@ with tf.Session() as sess:
 
 
 
-    
-    while True:
+    keep_going = True
+    while keep_going:
         images_batch, labels_batch = test_data.no_shuffle_next_batch(6)
         feed_dict = {images: images_batch, labels: labels_batch}
         result_soft = sess.run( [softmax_logits] , feed_dict=feed_dict)
@@ -100,11 +100,13 @@ with tf.Session() as sess:
             print(f"the dic coff is {dic}")
             #np.save(f"img{num}",predict_img[idx,...])
             scipy.misc.imsave(f"img{num}.jpg",predict_img[idx,...])
-
             print(f"get pic {num}")
             if num >= 279   :
                 print("end")
+                keep_going = False
                 break
+        
     dic_record = np.array(dic_record)
     np.save(dic_record,'dic_table') 
-    np.savetxt('diffrent_dic.csv', dic_record, delimiter = ',')                 
+    np.savetxt('diffrent_dic.csv', dic_record, delimiter = ',')
+                    

@@ -64,9 +64,10 @@ with tf.Session() as sess:
     print("Model restored.")
     num = 0
     dic_record = list
-    images, labels = tfmodel.placeholder_inputs(batch_size=1)
-
-    logits, softmax_logits = tfmodel.inference(images, class_inc_bg=2)
+    softmax_logits = graph.get_tensor_by_name("softmax_logits")
+    logits= graph.get_tensor_by_name("logits")   
+    images =graph.get_tensor_by_name("images")
+    labels =graph.get_tensor_by_name("labels")
 
     while True:
         images_batch, labels_batch = test_data.no_shuffle_next_batch(1)

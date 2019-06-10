@@ -67,9 +67,9 @@ with tf.Session() as sess:
     dic_record = list
     graph = tf.get_default_graph()
     nodes =np.array( [tensor.name for tensor in graph.as_graph_def().node])
-    idx = 0
+    i = 0
     for i in range(nodes.size):
-         print(f"the pos : {idx}  ---is {nodes[idx]}")
+         print(f"the pos : {i}  ---is {nodes[idx]}")
          i+=1
 
   

@@ -10,8 +10,10 @@ import tfmodel.GetData
 
 # Dice Coefficient to work outside Tensorflow
 
+
 def dice_coef_2(y_true, y_pred):
 
+    smooth = 1
     side = len(y_true[0])
 
     y_true_f = y_true.reshape(side*side)
@@ -21,6 +23,9 @@ def dice_coef_2(y_true, y_pred):
     intersection = sum(y_true_f * y_pred_f)
 
     return (2. * intersection + smooth) / (sum(y_true_f) + sum(y_pred_f) + smooth)
+
+
+
 
 
 DATA_NAME = 'Data'

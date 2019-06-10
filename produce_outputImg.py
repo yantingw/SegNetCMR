@@ -71,7 +71,7 @@ with tf.Session() as sess:
     while True:
         images_batch, labels_batch = test_data.no_shuffle_next_batch(1)
         feed_dict = {images: images_batch, labels: labels_batch}
-        result_soft,result_logits = sess.run( [softmax_logits,lologits] , feed_dict=feed_dict)
+        result_soft,result_logits = sess.run( [softmax_logits, logits] , feed_dict=feed_dict)
         
         
         result_soft = np.array(result_soft)

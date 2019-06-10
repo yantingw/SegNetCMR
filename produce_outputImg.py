@@ -84,8 +84,8 @@ with tf.Session() as sess:
         
         
         result_soft = np.array(result_soft).reshape(6,256,256,2)
-        print(result_soft.size)
-        print(result_soft)
+        #print(result_soft.size)
+        #print(result_soft)
 
 
         predict_img =np.full((6,256,256), 0)

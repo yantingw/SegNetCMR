@@ -66,5 +66,5 @@ class GetData():
 
         examples_idx = self.source_list[:batch_size]
         del self.source_list[:batch_size]
-
+        print(self.labels[examples_idx,...])
         return self.images[examples_idx,...], self.labels[examples_idx,...]

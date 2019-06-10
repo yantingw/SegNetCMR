@@ -66,13 +66,14 @@ with tf.Session() as sess:
     num = 0
     dic_record = list
     graph = tf.get_default_graph()
-    print([tensor.name for tensor in graph.as_graph_def().node])
-
+    nodes =np.array( [tensor.name for tensor in graph.as_graph_def().node])
+    idx = np.where(nodes=="ouput/softmax_logits")
+    print(f"the pos is {idx}")
   
  #   logits= graph.get_tensor_by_name("logits:0")   
     images =graph.get_tensor_by_name("Placeholder:0")
     labels =graph.get_tensor_by_name("Placeholder_1:0")
-    softmax_logits = graph.get_tensor_by_name('ouput//softmax_logits:0')
+    softmax_logits = graph.get_tensor_by_name(nodes[idx[0]])
 
 
 

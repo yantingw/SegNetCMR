@@ -69,7 +69,7 @@ with tf.Session() as sess:
     nodes =np.array( [tensor.name for tensor in graph.as_graph_def().node])
     idx = 0
     for i in range(nodes.size):
-         print(f"the pos : {idx}  ---is {node[idx]}")
+         print(f"the pos : {idx}  ---is {nodes[idx]}")
          i+=1
 
   

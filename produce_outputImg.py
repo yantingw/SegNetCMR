@@ -60,14 +60,14 @@ with tf.Session() as sess:
     saver.restore(sess, module_file)
     """
     new_saver = tf.train.import_meta_graph(model_path)
-    #new_saver.restore(sess,os.path.join(LOG_DIR, 'model.ckpt-2500'))
-    new_saver.restore(sess,tf.train.latest_checkpoint(LOG_DIR))
+    new_saver.restore(sess,os.path.join(LOG_DIR, 'model.ckpt-2500'))
+    #new_saver.restore(sess,tf.train.latest_checkpoint(LOG_DIR))
     print("Model restored.")
     num = 0
     dic_record = list
     graph = tf.get_default_graph()
-    #softmax_logits = graph.get_tensor_by_name("softmax_logits:0")
-    #logits= graph.get_tensor_by_name("logits:0")   
+    softmax_logits = graph.get_tensor_by_name("softmax_logits:0")
+    logits= graph.get_tensor_by_name("logits:0")   
     images =graph.get_tensor_by_name("images:0")
     labels =graph.get_tensor_by_name("labels:0")
 

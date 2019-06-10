@@ -83,7 +83,9 @@ with tf.Session() as sess:
         result_soft = sess.run( [softmax_logits] , feed_dict=feed_dict)
         
         
-        result_soft = np.array(result_soft).reshape(6,256,256,2)
+        result_soft = np.array(result_soft)#.reshape(6,256,256,2)
+        print(result_soft.shape)
+        
         predict_img =np.full((6,256,256), 0)
 
 

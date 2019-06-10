@@ -38,8 +38,14 @@ label_data = tfmodel.GetData(TEST_DATA_DIR)
 model_path = os.path.join(LOG_DIR,'model.ckpt-2500.meta')
 
 with tf.Session() as sess:
+    #"""
+    saver = tf.train.Saver()
+    module_file = tf.train.latest_checkpoint(LOG_DIR)    
+    saver.restore(sess, module_file)
+#"""
     new_saver = tf.train.import_meta_graph(model_path)
     model_file= tf.train.latest_checkpoint('model.ckpt')
+    print(model_file)
     new_saver.restore(sess,model_file)
     print("Model restored.")
     num = 0
